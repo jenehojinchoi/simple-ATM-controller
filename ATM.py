@@ -37,12 +37,28 @@ class Card(object):
         for account in self.accounts:
             card_dict['accounts'].append(account.in_dict())
         return card_dict
+    
+    def get_accounts(self):
+        return self.accounts
 
 class ATM_controller(object):
     def __init__(self):
         #self.db = db
-        self.card_number = ''
+        self.card_pin = {
+            '1111 1111 1111 1111' : '1234'
+        }
+        self.card_accounts = {
+            '1111 1111 1111 1111' : ['123-456-789', '234-567-890']
+        }
         self.start()
+
+    def select_account(self, card_number): 
+        if len(self.card_accounts[card_number]) == 0:
+            print("There is no account connected to this card. \n")
+            return
+        print("Please select your account to progress transaction.")
+        for account in self.card_accounts[card_number]:
+            print(account)
 
     def start(self):
         print("Please insert your card.")
@@ -51,15 +67,17 @@ class ATM_controller(object):
             print("Please enter your pin number")
             pin_number = sys.stdin.readline().strip()
         if not self.check_pin_number(card_number, pin_number):
-            print("card_number: ", card_number)
-            print("pin_number: ", pin_number)
             print('Wrong pin number. Please restart. \n')
         else:
             print("Correct pin number.")
+            self.select_account(card_number)
     
     def check_pin_number(self, card_number, pin_number):
-        print("checking pin number?")
-        return True
+        if card_number in self.card_pin:
+            if self.card_pin[card_number] == pin_number:
+                return True
+            else:
+                return False
 
 def main():
     # db = {
