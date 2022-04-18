@@ -132,6 +132,8 @@ class ATM_controller(object):
                 print("----------------------------------------------------------------")
                 print("End of transaction. \n")
                 return
+        
+            return self.continue_or_quit()
 
     def continue_or_quit(self):
         print("----------------------------------------------------------------")
@@ -147,7 +149,7 @@ class ATM_controller(object):
             print("----------------------------------------------------------------")
             print("[FAIL] Invalid option. Please try again. ")
             return self.continue_or_quit()
-
+        
         
 class Account(object):
     def __init__(self, account_dict):
